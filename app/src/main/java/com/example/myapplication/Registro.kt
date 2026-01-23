@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -48,7 +49,9 @@ class Registro : ComponentActivity() {
             MyApplicationTheme {
                 val context = LocalContext.current
                 Scaffold(
-                    modifier = Modifier.fillMaxSize().padding(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(),
                     topBar = {
                         TopAppBar(
                             title = { Text("Ventana 3") },
@@ -64,7 +67,11 @@ class Registro : ComponentActivity() {
                     }
                 ) { innerPadding ->
 
-                    RegisterScreen(modifier = Modifier.padding(innerPadding).fillMaxSize())
+                    RegisterScreen(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                    )
 
                 }
             }
@@ -81,16 +88,15 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-
 @OptIn(ExperimentalMaterial3Api::class)
 fun RegisterScreen(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modifier) {
     var correo by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var password2 by remember { mutableStateOf("") }
-    var log by remember {mutableStateOf("")}
+    var log by remember { mutableStateOf("") }
     val context = LocalContext.current
-    val usuarios = viewModel.usuarios.collectAsState(initial=emptyList())
+    val usuarios = viewModel.usuarios.collectAsState(initial = emptyList())
     //add topappbar
     Column(
         modifier = modifier,
@@ -116,14 +122,24 @@ fun RegisterScreen(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier
         Spacer(modifier = Modifier.padding(vertical = 16.dp))
         LazyColumn() {
             items(usuarios.value.size) {
-                Text(usuarios.value[it].username)
+                Text(text = "Nombre Usuario: " + usuarios.value[it].username)
+
             }
         }
         //Rectangle shape button with rounded corner
         OutlinedButton(
             onClick = {
                 viewModel.insertarUsuario(username, correo, password)
-                log = "Usuario registrado"
+                Toast.makeText(
+                    context,
+                    "Agregado con exito",
+                    Toast.LENGTH_LONG,
+                ).show()
+                username = ""
+                correo = ""
+                password = ""
+                password2 = ""
+
             },
             modifier = Modifier.padding(16.dp)
         ) {
@@ -152,16 +168,20 @@ fun GreetingPreview3() {
 
                         }
                     },
-                    actions={
+                    actions = {
                         IconButton(onClick = { /* acción */ }) {
                             Icon(Icons.Default.Menu, contentDescription = "Menu")
                         }
                     }
-                    )
+                )
             }
         ) { innerPadding ->
 
-            RegisterScreen(modifier = Modifier.fillMaxSize().padding(innerPadding))
+            RegisterScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            )
 
         }
     }
