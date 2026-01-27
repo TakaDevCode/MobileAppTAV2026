@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+        "username": "Jose",
+        "correo": "jose@correo.cl",
+        "password": "1234"
+        },
+        {
+        "username": "Sasha",
+        "correo": "sasha@correo.cl",
+        "password": "1234"
+        },
+        {
+        "username": "Juan",
+        "correo": "juan@correo.cl",
+        "password": "1234"
+        },
+        {
+        "username": "Maria",
+        "correo": "maria@correo.cl",
+        "password": "1234"
+        }
+        
+    ]
+}

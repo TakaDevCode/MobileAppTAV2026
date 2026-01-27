@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -42,7 +44,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.viewmodel.ApiViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -74,12 +78,37 @@ class MainActivity : ComponentActivity() {
                     Inicial(
                         modifier = Modifier.padding(innerPadding)
                     )
+                    API(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+
+@Composable
+fun API(viewModel: ApiViewModel = viewModel(), modifier: Modifier) {
+    val usuarios = viewModel.usuarios
+
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = { viewModel.obtenerUsuariosResponse() }) {
+            Text("Obtener Usuarios")
+        }
+        LazyColumn() {
+            items(viewModel.usuarios.size) {
+                    Text(text = "Nombre Usuario: " + viewModel.usuarios[it].username,
+                        style = MaterialTheme.typography.bodyLarge)
+                    Text(text = "Correo: " + viewModel.usuarios[it].correo,
+                        style = MaterialTheme.typography.bodyLarge)
+
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
