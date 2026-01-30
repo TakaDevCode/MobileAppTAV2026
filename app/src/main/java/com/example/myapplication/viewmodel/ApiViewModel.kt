@@ -8,9 +8,9 @@ import com.example.myapplication.repository.APIUsuarios
 import kotlinx.coroutines.launch
 import kotlin.collections.emptyList
 
-class ApiViewModel : ViewModel() {
+class ApiViewModel(   private val repo: APIUsuarios = APIUsuarios()) : ViewModel() {
 
-    private val repo: APIUsuarios = APIUsuarios()
+
     var usuarios = mutableStateListOf<Usuario>()
         private set
     fun obtenerUsuariosResponse() = viewModelScope.launch {

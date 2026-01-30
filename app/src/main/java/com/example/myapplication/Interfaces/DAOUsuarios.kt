@@ -1,5 +1,6 @@
 package com.example.myapplication.Interfaces
 
+import android.app.Application
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
